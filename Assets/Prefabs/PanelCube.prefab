@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3669960711296811375}
   - component: {fileID: 3669960711296811360}
   - component: {fileID: 3669960711296811361}
-  - component: {fileID: 3669960711296811373}
+  - component: {fileID: 12332421098741159}
   m_Layer: 0
   m_Name: PanelCube
   m_TagString: Untagged
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3669960711296811373
+--- !u!114 &12332421098741159
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,8 +105,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3669960711296811362}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9c3757a7f81e42468558f5d1a51e952, type: 3}
+  m_Script: {fileID: 11500000, guid: bcb20a8f987e9394a967a48d1c04d140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 2
-  moveAmountZ: 0.01
+  moveRange: 8
+  moveSpeed: 0.01
+  moveDir: {x: 1, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  endPos: {x: 0, y: 0, z: 0}
+  moveMultiplier: 1
