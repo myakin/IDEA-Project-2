@@ -12,7 +12,7 @@ public class CollectibleManager : MonoBehaviour {
         }
     }
     
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter(Collider other) {
         if (other.tag=="Player") {
             // playerin key sayisini artir
             // other.GetComponent<PlayerController>().numOfKeys++;

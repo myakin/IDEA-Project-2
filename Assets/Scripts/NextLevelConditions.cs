@@ -5,7 +5,7 @@ using UnityEngine;
 public class NextLevelConditions : MonoBehaviour {
     
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player") {
             // varsa level gecme sartlarini degerlendir
 
