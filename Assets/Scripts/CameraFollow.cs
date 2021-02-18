@@ -58,8 +58,15 @@ public class CameraFollow : MonoBehaviour {
     public void ResetTurnAroundOffset() {
         turnAroundOffset = 0;
     }
+    public void DecreaseTurnAroundOffset(float anOffset) {
+        turnAroundOffset -= anOffset;
+    }
     public void SetDistance(float anOffset) {
         backOffset += anOffset * scrollSpeed;
+    }
+
+    public Vector3 GetCameraPositionOnTargetPlane() {
+        return transform.position - target.up * upOffset;
     }
 
 

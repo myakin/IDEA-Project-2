@@ -63,13 +63,32 @@ public class PlayerController : MonoBehaviour {
             playerCam.GetComponent<CameraFollow>().SetTurnAroundOffset(mouseX);
             playerCam.GetComponent<CameraFollow>().SetDistance(Input.mouseScrollDelta.y);
             if (ver!=0) {
+                // if (!turnAroundModePlayerRotCorrected) {
+                //     turnAroundModePlayerRotCorrected = true;
+                //     float deltaAngle = Vector3.SignedAngle(-transform.forward, playerCam.position - transform.position, transform.up);
+                //     transform.rotation *= Quaternion.Euler(0, deltaAngle, 0);
+                //     playerCam.GetComponent<CameraFollow>().ResetTurnAroundOffset();
+                // }
+                // transform.rotation *= Quaternion.Euler(0, mouseX, 0);
+
+                
+                // unityde vektorlerin izdusumunu hesaplamak icin elimizdeki gibi bir duzenekte aslinda derste bahsettigim gibi cos almaya vs ihtiyacimiz yok
+                // kameranin oyuncuya gore offsetUp'ini biliyoruz, ayrica kameranin pozisynunu biliyoruz. bu verilerle camera follow scriptinin izdusum vektorunu bize vermesini saglamak kolay
+                Vector3 camPosOnPlayerPlane = playerCam.GetComponent<CameraFollow>().GetCameraPositionOnTargetPlane();
+                Vector3 lookDirection = transform.position - camPosOnPlayerPlane;
+                float deltaAngle = Vector3.SignedAngle(transform.forward, lookDirection, transform.up); // angle hesabini dogru yaparsak mantigin geri kalaninin isini dogru yapacagini dusunebiliriz
+
+                // burada puf nokta su: her framede oyuncunun rotasyonunu deltaAngle ile degistirdim, artik kamera acisi ile senkronum (bakis acisiolarak)
+                // ama kamera scriptindei turnAroundOffseti de ayni oranda dusurmem lazim. bunu yapmazsam surekli rotasyon yapan bir kamera acisi elde ediyorum. bunu yapinca kamera sabitlenebilmeli
+                transform.rotation *= Quaternion.Euler(0, deltaAngle, 0);
                 if (!turnAroundModePlayerRotCorrected) {
-                    turnAroundModePlayerRotCorrected = true;
-                    float deltaAngle = Vector3.SignedAngle(-transform.forward, playerCam.position - transform.position, transform.up);
-                    transform.rotation *= Quaternion.Euler(0, deltaAngle, 0);
+                    turnAroundModePlayerRotCorrected=true;
                     playerCam.GetComponent<CameraFollow>().ResetTurnAroundOffset();
+                } else {
+                    playerCam.GetComponent<CameraFollow>().DecreaseTurnAroundOffset(deltaAngle);
                 }
-                transform.rotation *= Quaternion.Euler(0, mouseX, 0);
+                
+                
 
             } else {
                 turnAroundModePlayerRotCorrected= false;
