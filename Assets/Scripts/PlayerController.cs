@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
     private Vector3 oldPosition;
     private float moveMultiplier = 1;
     private Vector2 defaultColliderOffset, defaultColliderSize, jumpingColliderOffset, jumpingColliderSize;
+    private bool turnAroundModePlayerRotCorrected;
 
     private void Start() {
         animator = GetComponent<Animator>();
@@ -34,6 +35,12 @@ public class PlayerController : MonoBehaviour {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            playerCam.GetComponent<CameraFollow>().ToggleCameraMode();
+        }
+
+        
+
         moveMultiplier = Input.GetKey(KeyCode.LeftShift) ? moveMultiplier = 2 : moveMultiplier = 1;
         animator.SetFloat("vertical", ver * moveMultiplier);
         animator.SetFloat("horizontal", hor *  moveMultiplier);
@@ -50,8 +57,26 @@ public class PlayerController : MonoBehaviour {
             animator.SetTrigger("jump");
         }
 
-        transform.rotation *= Quaternion.Euler(0, mouseX, 0);
-        playerCam.rotation *= Quaternion.Euler(-mouseY, 0, 0);
+        if (!playerCam.GetComponent<CameraFollow>().CheckIfTurnAroundModeOn()) { // turn around mode off
+            transform.rotation *= Quaternion.Euler(0, mouseX, 0);
+        } else { // turn around mode on
+            playerCam.GetComponent<CameraFollow>().SetTurnAroundOffset(mouseX);
+            playerCam.GetComponent<CameraFollow>().SetDistance(Input.mouseScrollDelta.y);
+            if (ver!=0) {
+                if (!turnAroundModePlayerRotCorrected) {
+                    turnAroundModePlayerRotCorrected = true;
+                    float deltaAngle = Vector3.SignedAngle(-transform.forward, playerCam.position - transform.position, transform.up);
+                    transform.rotation *= Quaternion.Euler(0, deltaAngle, 0);
+                    playerCam.GetComponent<CameraFollow>().ResetTurnAroundOffset();
+                }
+                transform.rotation *= Quaternion.Euler(0, mouseX, 0);
+
+            } else {
+                turnAroundModePlayerRotCorrected= false;
+            }
+        }
+        // playerCam.rotation *= Quaternion.Euler(-mouseY, 0, 0);
+        playerCam.GetComponent<CameraFollow>().SetRotationOffset(-mouseY);
 
         // Debug.Log(jumpValue);
 
