@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     public float velocityForceMagnitude = 1;
     public Transform playerCam;
     
+    
     private Animator animator;
     private bool isJumping;
     private bool isCheckingGround;
@@ -97,6 +98,23 @@ public class PlayerController : MonoBehaviour {
         // playerCam.rotation *= Quaternion.Euler(-mouseY, 0, 0);
         playerCam.GetComponent<CameraFollow>().SetRotationOffset(-mouseY);
 
+
+        if (ver!=0) {
+            GetComponent<ObjectRaycaster>().PerformRaycast(
+                delegate {
+                    // Debug.Log("Hit ground while ver is not zero");
+                }
+            );
+        }
+
+        if (hor!=0) {
+            GetComponent<ObjectRaycaster>().PerformRaycast(
+                delegate {
+                    // Debug.Log("Hit ground while hor is not zero");
+                }
+            );
+        }
+
         // Debug.Log(jumpValue);
 
         // if (!isJumping) {
@@ -149,6 +167,9 @@ public class PlayerController : MonoBehaviour {
         // }
 
         // oldPosition = transform.position;
+
+
+
 
     }
 
