@@ -1,52 +1,12 @@
 fileFormatVersion: 2
-guid: 42496566f2bebfc4992616410ef54d3f
+guid: a1bf13bde4477274089c7a2f7dd293ac
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: mixamo.com
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Boy01_Body_MAT
-    second: {fileID: 2100000, guid: 3a89cf19fdba1914cb8f5bbb36140abd, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Boy01_Brows_MAT1
-    second: {fileID: 2100000, guid: 5ab2fa961e9ce5e439170c2fcc4527ef, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Boy01_Eyes_MAT1
-    second: {fileID: 2100000, guid: f0ffd609687304942886c2f3d1560dc9, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Boy01_Mouth_MAT1
-    second: {fileID: 2100000, guid: ac744b3318873d54cb2268c50acf21ee, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Boy01_FacialAnimMap
-    second: {fileID: 2800000, guid: 35e8485cd5d972c428403a2bc39b3c75, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Boy01_diffuse
-    second: {fileID: 2800000, guid: c979098326e62b14c8a9a0cc203ddcad, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Boy01_normal
-    second: {fileID: 2800000, guid: a01c7ca9892d8c94c98438ace276cbe3, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Boy01_spec
-    second: {fileID: 2800000, guid: 5dd3f25b3a40c714b9bedbd7057e011e, type: 3}
+    second: JumpOnAir
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -66,14 +26,43 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: JumpOnAir
+      takeName: mixamo.com
+      internalID: 0
+      firstFrame: 9.9
+      lastFrame: 11.2
+      wrapMode: 0
+      orientationOffsetY: 11.46
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -82,10 +71,10 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importVisibility: 0
+    importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -115,24 +104,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - bede44983e8dba54e835f3f26067ff59
-  - d58513989fd792a43acca9344fd3f8ea
-  - de8037250250dbc41a7e4ae274e41003
-  - 000ddebb51217794d90e5b25d4fc1e56
-  - 792f6ea5209ea9a4887240ca7cd98094
-  - 1f65b7557b50fff4b8bba8f8eb603dd8
-  - 7b4c0b9e5faeb7449a7713dde7486540
-  - a1bf13bde4477274089c7a2f7dd293ac
-  - bbab006f6b1058846b6ed6b7e666b2be
-  - 55e0a8a6e3f26894cbcfb0b613a63b73
-  - 6ff49cc12ce34ab4dbc0e1fe2e175480
-  - a83c20536f285db4d8336e55944e1450
-  - ec0008a2384cf46479a56512a04c17e5
-  - 1f9a72dfa53fa234c93d74bc2feaee6a
-  - ce645a9de05ca7d4d81b0d6ad0696519
-  - 4267367d6bba30b4cb686da700667337
-  - 92684b47b2afd774e8c46fcc1d405ead
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
@@ -985,11 +957,11 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 42496566f2bebfc4992616410ef54d3f, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   additionalBone: 0
   userData: 

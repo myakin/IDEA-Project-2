@@ -18,5 +18,14 @@ public class ObjectRaycaster : MonoBehaviour {
         }
     }
 
+    public void PerformRaycast(Vector3 aStartPosition, Vector3 aDirection, float aDistance, LayerMask aLayer, QueryTriggerInteraction aTriggerIgnoreState, OnHitAction onHit) {
+        RaycastHit hit;
+        if (Physics.Raycast(aStartPosition, aDirection, out hit, aDistance, aLayer, aTriggerIgnoreState)) {
+            if (onHit!=null) {
+                onHit();
+            }
+        }
+    }
+
 
 }

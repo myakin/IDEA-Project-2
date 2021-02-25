@@ -3,28 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-    public float moveSpeed = 0.001f;
-    public float jumpStrength = 100f;
-    public float velocityForceMagnitude = 1;
+    // public float jumpStrength = 100f; // jump
     public Transform playerCam;
     
-    
-    private Animator animator;
-    private bool isJumping;
-    private bool isCheckingGround;
-    private float jumpTimer;
-    private Vector3 oldPosition;
+    private Animator animator; // jump
+    // private bool isJumping, isRaycasting, isJumpForceApplied; // jump
+
     private float moveMultiplier = 1;
-    private Vector2 defaultColliderOffset, defaultColliderSize, jumpingColliderOffset, jumpingColliderSize;
+    
+    // private Vector3 defaultColliderCenter, jumpingColliderCenter; // jump
+    // private float defaultColliderHeight, jumpingColliderHeight; // jump
+    
     private bool turnAroundModePlayerRotCorrected;
+    
 
     private void Start() {
         animator = GetComponent<Animator>();
-        // defaultColliderOffset = GetComponent<CapsuleCollider2D>().offset;
-        // defaultColliderSize = GetComponent<CapsuleCollider2D>().size;
 
-        // jumpingColliderOffset = new Vector2(defaultColliderOffset.x, 1.74f);
-        // jumpingColliderSize = new Vector2(defaultColliderSize.x, 1.49f);
+        // defaultColliderCenter = GetComponent<CapsuleCollider>().center;
+        // defaultColliderHeight = GetComponent<CapsuleCollider>().height;
+        // jumpingColliderCenter = new Vector3 (defaultColliderCenter.x, 1.37f, defaultColliderCenter.z);
+        // jumpingColliderHeight = 1.19f;
 
     }
 
@@ -40,23 +39,23 @@ public class PlayerController : MonoBehaviour {
             playerCam.GetComponent<CameraFollow>().ToggleCameraMode();
         }
 
-        
-
         moveMultiplier = Input.GetKey(KeyCode.LeftShift) ? moveMultiplier = 2 : moveMultiplier = 1;
         animator.SetFloat("vertical", ver * moveMultiplier);
         animator.SetFloat("horizontal", hor *  moveMultiplier);
-        if (jumpValue > 0)
-        {
-            if (hor == 0 && ver == 0)
-            {
-                animator.SetBool("isStandingJump", true);
-            }
-            else
-            {
-                animator.SetBool("isStandingJump", false);
-            }
-            animator.SetTrigger("jump");
-        }
+        // if (jumpValue > 0 && !isJumping) {
+        //     isJumping=true;
+        //     animator.SetTrigger("jump");
+        //     SetColliderForJumping();
+        // }
+        // if (isJumping) {
+        //     if (!isJumpForceApplied && jumpValue > 0) {
+        //         ApplyJumpForce();
+        //     }
+            
+        //     if (isRaycasting) {
+        //         PerformRaycast();
+        //     }
+        // }
 
         if (!playerCam.GetComponent<CameraFollow>().CheckIfTurnAroundModeOn()) { // turn around mode off
             transform.rotation *= Quaternion.Euler(0, mouseX, 0);
@@ -64,15 +63,6 @@ public class PlayerController : MonoBehaviour {
             playerCam.GetComponent<CameraFollow>().SetTurnAroundOffset(mouseX);
             playerCam.GetComponent<CameraFollow>().SetDistance(Input.mouseScrollDelta.y);
             if (ver!=0) {
-                // if (!turnAroundModePlayerRotCorrected) {
-                //     turnAroundModePlayerRotCorrected = true;
-                //     float deltaAngle = Vector3.SignedAngle(-transform.forward, playerCam.position - transform.position, transform.up);
-                //     transform.rotation *= Quaternion.Euler(0, deltaAngle, 0);
-                //     playerCam.GetComponent<CameraFollow>().ResetTurnAroundOffset();
-                // }
-                // transform.rotation *= Quaternion.Euler(0, mouseX, 0);
-
-                
                 // unityde vektorlerin izdusumunu hesaplamak icin elimizdeki gibi bir duzenekte aslinda derste bahsettigim gibi cos almaya vs ihtiyacimiz yok
                 // kameranin oyuncuya gore offsetUp'ini biliyoruz, ayrica kameranin pozisynunu biliyoruz. bu verilerle camera follow scriptinin izdusum vektorunu bize vermesini saglamak kolay
                 Vector3 camPosOnPlayerPlane = playerCam.GetComponent<CameraFollow>().GetCameraPositionOnTargetPlane();
@@ -114,102 +104,68 @@ public class PlayerController : MonoBehaviour {
                 }
             );
         }
-
-        // Debug.Log(jumpValue);
-
-        // if (!isJumping) {
-        //     if (Input.GetKey(KeyCode.LeftShift)) {
-        //         moveMultiplier = 3;
-        //         animator.SetBool("isRunning", true);
-        //     } else {
-        //         moveMultiplier = 1;
-        //         animator.SetBool("isRunning", false);
-        //     }
-        //
-        //     animator.SetFloat("walkLeftRight", hor * moveMultiplier);
-        //     transform.position += transform.right * (moveSpeed * hor * moveMultiplier);
-        //     
-        //     if (hor>0) {
-        //         GetComponent<SpriteRenderer>().flipX = false;
-        //     } else if (hor<0) {
-        //         GetComponent<SpriteRenderer>().flipX = true;
-        //     }
-        // }
-
-        // // jump trigger
-        // if (jumpValue>0) {
-        //     if (!isJumping) {
-        //         isJumping = true;
-        //         animator.SetTrigger("triggerJump");
-        //
-        //         transform.SetParent(null);
-        //
-        //         Vector3 velocity = transform.position - oldPosition;
-        //         GetComponent<Rigidbody2D>().AddForce(velocity * velocityForceMagnitude);
-        //
-        //         GetComponent<CapsuleCollider2D>().offset = jumpingColliderOffset;
-        //         GetComponent<CapsuleCollider2D>().size = jumpingColliderSize;
-        //
-        //     }
-        //     jumpTimer+=Time.deltaTime;
-        //     if (jumpTimer<0.5f) {
-        //         GetComponent<Rigidbody2D>().AddForce(transform.up * jumpStrength);
-        //     }
-        // } 
-
-        // // ground checking
-        // if (isCheckingGround) {
-        //     RaycastGround();
-        //
-        //     // if (animator.GetCurrentAnimatorStateInfo(0).IsName("CharacterIdleAnimation")) {
-        //     //     ResetJump();
-        //     // }
-        // }
-
-        // oldPosition = transform.position;
-
-
-
-
+        
     }
 
-    // called from CharacterJumpEndAnimation animation
-    public void ResetJump() {
-        isCheckingGround = false;
-        isJumping = false;
-        animator.SetBool("isGrounded", false);
-        jumpTimer = 0;
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-    }
+    // // called from animator
+    // public void ResetJump() {
+    //     isJumping = false;
+    //     isRaycasting = false;
+    //     isJumpForceApplied = false;
+    //     GetComponent<Rigidbody>().velocity = Vector3.zero;
+    //     totalUpForce = Vector3.zero;
+    // }
 
-    // called from CharacterJumpStartAnimation animation
-    public void StartCheckingGround() {
-        isCheckingGround = true;
-    }
+    // // called from animator
+    // public void ResetCollider() {
+    //     GetComponent<CapsuleCollider>().center = defaultColliderCenter;
+    //     GetComponent<CapsuleCollider>().height = defaultColliderHeight;
+    // }
 
+    // // called from animator
+    // public void StartRaycast() {
+    //     isRaycasting = true;
+    // }
+    // private void PerformRaycast() {
+    //     RaycastHit hit;
+    //     if (Physics.Raycast(transform.position, -transform.up, out hit, 0.5f, 1<<0, QueryTriggerInteraction.Ignore)) {
+    //         isRaycasting = false;
+    //         animator.SetTrigger("ProceedToLastJumpPhase");
+    //     }
+    // }
 
+    // Vector3 totalUpForce = Vector3.zero;
+    // private void ApplyJumpForce() {
+    //     Vector3 currentVelocity = GetComponent<Rigidbody>().velocity;
+    //     Vector3 forceHorizontal = currentVelocity * (jumpStrength * Time.deltaTime);
+    //     Vector3 forceUp = transform.up * (jumpStrength * Time.deltaTime);
+    //     GetComponent<Rigidbody>().AddForce(forceHorizontal + forceUp, ForceMode.Force);
+    //     totalUpForce+=forceUp;
+    // }
 
-    private void RaycastGround()
-    {
-        //RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.up, 0.2f, 1<<0);
-        //if (hit.collider!=null && hit.collider.tag == "Platform") {
-        //    // Debug.Log(hit.collider.gameObject.name);
-        //    // set animator to idle
-        //    animator.SetBool("isGrounded", true);
-        //    transform.SetParent(hit.transform);
-        //}
+    // // called from animator
+    // public void RistrictApplyingJumpForce() {
+    //     isJumpForceApplied = true;
+    // }
+    // private void SetColliderForJumping(){
+    //     GetComponent<CapsuleCollider>().center = jumpingColliderCenter;
+    //     GetComponent<CapsuleCollider>().height = jumpingColliderHeight;
+    // }
 
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(0.517f, 0.01f), 0, -transform.up, 0.2f, 1 << 0);
-        if (hit.collider != null && hit.collider.tag == "Platform")
-        {
-            animator.SetBool("isGrounded", true);
-            transform.SetParent(hit.transform);
-        }
-    }
+    // // called from animator
+    // public void TestForShortJump() {
+    //     // Debug.Log(totalUpForce.magnitude);
+    //     if (totalUpForce.magnitude<2000) {
+    //         animator.SetTrigger("ProceedToLastJumpPhase");
+    //     }
+    // }
 
-    // called from animator
-    public void ResetCollider() {
-        GetComponent<CapsuleCollider2D>().offset = defaultColliderOffset;
-        GetComponent<CapsuleCollider2D>().size = defaultColliderSize;
-    }
+    // private void OnCollisionEnter(Collision other) {
+    //     Debug.Log(other.collider.tag);
+    //     if (other.collider.tag=="Ground") {
+    //         if (isJumping) {
+    //             animator.SetTrigger("ProceedToLastJumpPhase");
+    //         }
+    //     }
+    // }
 }
