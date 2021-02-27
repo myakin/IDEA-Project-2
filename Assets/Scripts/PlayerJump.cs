@@ -109,4 +109,9 @@ public class PlayerJump : MonoBehaviour
             animator.SetTrigger("ProceedToLastJumpPhase");
         }
     }
+
+    public void IncreaseJumpStrength(float aValue) {
+        jumpStrength+=aValue;
+        DataManager.instance.SetJumpStrength(jumpStrength);
+    }
 }

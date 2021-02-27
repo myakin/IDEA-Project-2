@@ -20,4 +20,8 @@ public class OpenCloseHingeStyleDoorByAnimator : MonoBehaviour {
             animator.SetTrigger("Close");
         }
     }
+
+    public void OpenDoor() {
+        animator.SetTrigger("Open");
+    }
 }

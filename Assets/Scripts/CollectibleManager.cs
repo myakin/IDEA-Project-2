@@ -5,6 +5,8 @@ using UnityEngine;
 public class CollectibleManager : MonoBehaviour {
 
     public int id;
+    public MYUnityEvent OnEnter;
+    
 
     public void Start() {
         if (DataManager.instance.collectedKeys.Contains(id)) {
@@ -14,18 +16,10 @@ public class CollectibleManager : MonoBehaviour {
     
     private void OnTriggerEnter(Collider other) {
         if (other.tag=="Player") {
-            // playerin key sayisini artir
-            // other.GetComponent<PlayerController>().numOfKeys++;
-            // UIManager.instance.IncreasePlayerScore();
-            // PlayerPrefs.SetInt("TakenKeys"+id,0); // TakenKeys0 = 0
-
-            DataManager.instance.IncreasePlayerScore();
-            DataManager.instance.AddToCollectedKeys(id);
-            
-            // bu key'i yok et
-            // gameObject.SetActive(false);
+            if (OnEnter!=null) {
+                OnEnter.Invoke();
+            }
             Destroy(gameObject);
-
         }
     }
 }

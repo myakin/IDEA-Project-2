@@ -22,6 +22,7 @@ public class DataManager : MonoBehaviour {
     public int playerLife;
     public int playerScore;
     public int playerHealth;
+    public float playerJumpStrength;
 
 
     public List<int> collectedKeys = new List<int>();
@@ -37,9 +38,13 @@ public class DataManager : MonoBehaviour {
         }
     }
 
-    public void IncreasePlayerScore() {
-        playerScore++;
+    public void SetPlayerScore(int aValue) {
+        playerScore = aValue;
         UIManager.instance.UpdatePlayerScore();
+    }
+    public void SetJumpStrength(float aValue) {
+        playerJumpStrength = aValue;
+        // UIManager.instance.UpdatePlayerScore();
     }
 
     public void ResetData() {
