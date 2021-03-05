@@ -31,6 +31,7 @@ public class PlayerJump : MonoBehaviour
             isJumping=true;
             animator.SetTrigger("jump");
             SetColliderForJumping();
+            transform.SetParent(null);
         }
         if (isJumping) {
             if (!isJumpForceApplied && jumpValue > 0) {
@@ -77,9 +78,13 @@ public class PlayerJump : MonoBehaviour
             0.5f, 
             1<<0, 
             QueryTriggerInteraction.Ignore,
-            delegate{
+            delegate (RaycastHit hitObj) {
+                Debug.Log(hitObj.collider.gameObject.name);
                 isRaycasting = false;
                 animator.SetTrigger("ProceedToLastJumpPhase");
+                if (hitObj.transform.tag=="Platform") {
+                    transform.SetParent(hitObj.transform);
+                }
             }
         );
     }

@@ -7,13 +7,13 @@ public class ObjectRaycaster : MonoBehaviour {
     public float raycastDistance;
     public LayerMask raycastLayer;
 
-    public delegate void OnHitAction();
+    public delegate void OnHitAction(RaycastHit aHitObj);
 
     public void PerformRaycast(OnHitAction onHit) {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, raycastAxis, out hit, raycastDistance, raycastLayer, QueryTriggerInteraction.Ignore)) {
             if (onHit!=null) {
-                onHit();
+                onHit(hit);
             }
         }
     }
@@ -22,7 +22,7 @@ public class ObjectRaycaster : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(aStartPosition, aDirection, out hit, aDistance, aLayer, aTriggerIgnoreState)) {
             if (onHit!=null) {
-                onHit();
+                onHit(hit);
             }
         }
     }

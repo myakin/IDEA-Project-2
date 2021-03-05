@@ -87,7 +87,6 @@ public class DataManager : MonoBehaviour {
                 movingObjects[i].moveMultiplier,
                 movingObjects[i].moveSpeed,
                 movingObjects[i].startPos,
-                movingObjects[i].moveDir,
                 movingObjects[i].endPos
             );
             movingObjectsData.Add(movingObjectSave);
@@ -144,7 +143,6 @@ public class DataManager : MonoBehaviour {
                 loadedData.movingObjectSaveData[i].multiplier,
                 loadedData.movingObjectSaveData[i].speed,
                 loadedData.movingObjectSaveData[i].sPos,
-                loadedData.movingObjectSaveData[i].dir,
                 loadedData.movingObjectSaveData[i].ePos
             );
         }
