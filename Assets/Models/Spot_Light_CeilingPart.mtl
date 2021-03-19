@@ -1,0 +1,14 @@
+newmtl ProBuilderDefault
+map_Kd GridBox_Default.png
+Kd 1 1 1
+d 1
+
+newmtl LightSourceMat
+Kd 1 1 1
+d 1
+
+newmtl LambMat
+map_Kd 853de157239a637d9fa533e02c08e6a9.png
+Kd 1 1 1
+d 1
+
