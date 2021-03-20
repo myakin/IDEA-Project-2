@@ -19,12 +19,28 @@ public class PlayerController : MonoBehaviour {
 
     private void Start() {
         animator = GetComponent<Animator>();
+        // GetComponent<Rigidbody>().freezeRotation = false;
+
+        // float angleX = Vector3.SignedAngle(transform.up, Vector3.up, transform.right);
+        // Debug.LogWarning("angleX="+angleX);
+        // transform.rotation*=Quaternion.Euler(angleX,0,0);
+
+        // float angleZ = Vector3.SignedAngle(transform.up, Vector3.up, transform.forward);
+        // Debug.LogWarning("angleZ="+angleZ);
+        // transform.rotation*=Quaternion.Euler(angleZ,0,0);
+
+        // float angleX2 = Vector3.SignedAngle(transform.up, Vector3.up, transform.right);
+        // Debug.LogWarning("angleX2="+angleX2);
+
+        transform.rotation = Quaternion.LookRotation(Vector3.Cross(transform.right, Vector3.up), Vector3.up);
+
 
         // defaultColliderCenter = GetComponent<CapsuleCollider>().center;
         // defaultColliderHeight = GetComponent<CapsuleCollider>().height;
         // jumpingColliderCenter = new Vector3 (defaultColliderCenter.x, 1.37f, defaultColliderCenter.z);
         // jumpingColliderHeight = 1.19f;
 
+        // animator.enabled = true;
     }
 
     private void Update() {
