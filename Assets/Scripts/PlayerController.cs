@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour {
     // public float jumpStrength = 100f; // jump
@@ -15,6 +16,9 @@ public class PlayerController : MonoBehaviour {
     // private float defaultColliderHeight, jumpingColliderHeight; // jump
     
     private bool turnAroundModePlayerRotCorrected;
+    private Vector2 horVer, mouseXY;
+    private float jumpInput, camDistanceModifier;
+    private bool toggleRun;
     
 
     private void Start() {
@@ -43,19 +47,47 @@ public class PlayerController : MonoBehaviour {
         // animator.enabled = true;
     }
 
-    private void Update() {
-        float hor  = Input.GetAxis("Horizontal");
-        float ver  = Input.GetAxis("Vertical");
-        float jumpValue = Input.GetAxis("Jump");
-
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-
-        if (Input.GetKeyDown(KeyCode.Tab)) {
-            playerCam.GetComponent<CameraFollow>().ToggleCameraMode();
+    public void OnMove(InputAction.CallbackContext value) {
+        horVer = value.ReadValue<Vector2>();
+    }
+    public void OnLook(InputAction.CallbackContext value) {
+        mouseXY = value.ReadValue<Vector2>();
+    }
+    public void OnCameraModeChange(InputAction.CallbackContext value) {
+        playerCam.GetComponent<CameraFollow>().ToggleCameraMode();
+    }
+    public void OnKeyboardRun(InputAction.CallbackContext value) {
+        if (value.ReadValue<float>()>0) {
+            toggleRun = true;
+        } else {
+            toggleRun = false;
         }
+    }
 
-        moveMultiplier = Input.GetKey(KeyCode.LeftShift) ? moveMultiplier = 2 : moveMultiplier = 1;
+    bool changedOnce;
+    public void OnGamepadRun(InputAction.CallbackContext value) {
+        // Debug.Log(value.ReadValue<float>());
+        if (value.ReadValue<float>() > 0) {
+            if (!changedOnce)
+                toggleRun = !toggleRun;
+        } else {
+            changedOnce = false;
+        }
+    }
+    public void OnCamDistanceChange(InputAction.CallbackContext value) {
+        camDistanceModifier = value.ReadValue<float>();
+    }
+    
+
+    private void Update() {
+        float hor  = horVer.x;
+        float ver  = horVer.y;
+        // float jumpValue = jumpInput;
+
+        float mouseX = mouseXY.x;
+        float mouseY = mouseXY.y;
+
+        moveMultiplier = toggleRun ? moveMultiplier = 2 : moveMultiplier = 1;
         animator.SetFloat("vertical", ver * moveMultiplier);
         animator.SetFloat("horizontal", hor *  moveMultiplier);
         // if (jumpValue > 0 && !isJumping) {
@@ -77,7 +109,7 @@ public class PlayerController : MonoBehaviour {
             transform.rotation *= Quaternion.Euler(0, mouseX, 0);
         } else { // turn around mode on
             playerCam.GetComponent<CameraFollow>().SetTurnAroundOffset(mouseX);
-            playerCam.GetComponent<CameraFollow>().SetDistance(Input.mouseScrollDelta.y);
+            playerCam.GetComponent<CameraFollow>().SetDistance(camDistanceModifier);
             if (ver!=0) {
                 // unityde vektorlerin izdusumunu hesaplamak icin elimizdeki gibi bir duzenekte aslinda derste bahsettigim gibi cos almaya vs ihtiyacimiz yok
                 // kameranin oyuncuya gore offsetUp'ini biliyoruz, ayrica kameranin pozisynunu biliyoruz. bu verilerle camera follow scriptinin izdusum vektorunu bize vermesini saglamak kolay

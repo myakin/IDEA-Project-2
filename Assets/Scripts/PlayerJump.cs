@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerJump : MonoBehaviour
 {
@@ -10,7 +11,12 @@ public class PlayerJump : MonoBehaviour
     private Vector3 defaultColliderCenter, jumpingColliderCenter; // jump
     private float defaultColliderHeight, jumpingColliderHeight; // jump
     private Vector3 totalUpForce = Vector3.zero;
+    private float jumpValue;
     
+
+    public void OnJump(InputAction.CallbackContext value) {
+        jumpValue = value.ReadValue<float>();
+    }
 
     private void Start() {
         animator = GetComponent<Animator>();
@@ -25,7 +31,6 @@ public class PlayerJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float jumpValue = Input.GetAxis("Jump");
 
         if (jumpValue > 0 && !isJumping) {
             isJumping=true;

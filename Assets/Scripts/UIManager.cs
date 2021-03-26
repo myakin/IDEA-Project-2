@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour {
     public static UIManager instance;
@@ -17,6 +18,12 @@ public class UIManager : MonoBehaviour {
     public Button newGameButton, loadGameButton, saveGameButton;
     public GameObject mainMenuPanel;
 
+    
+    public void OnToggleMainMenu(InputAction.CallbackContext value) {
+        ToggleMainMenu();
+    }
+
+
     private void Start() {
         // numOfKeys = PlayerPrefs.GetInt("PlayerScore");
         // scoreText.text = numOfKeys.ToString();
@@ -27,11 +34,13 @@ public class UIManager : MonoBehaviour {
         UpdatePlayerScore();
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            ToggleMainMenu();
-        }
-    }
+   
+
+    // private void Update() {
+    //     if (Input.GetKeyDown(KeyCode.Escape)) {
+    //         ToggleMainMenu();
+    //     }
+    // }
 
     public void UpdatePlayerScore() {
         // numOfKeys++;

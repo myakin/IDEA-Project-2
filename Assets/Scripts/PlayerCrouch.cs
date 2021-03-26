@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerCrouch : MonoBehaviour {
     public Vector3 crouchColliderCenter;
@@ -9,6 +10,11 @@ public class PlayerCrouch : MonoBehaviour {
     private Vector3 defaultColliderCenter;
     private float defaultColliderHeight;
     private bool isCrouching;
+    private float crouch;
+
+    public void OnCrouch(InputAction.CallbackContext value) {
+        crouch = value.ReadValue<float>();
+    }
     
     private void Start() {
         defaultColliderCenter = GetComponent<CapsuleCollider>().center;
@@ -16,7 +22,7 @@ public class PlayerCrouch : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKey(KeyCode.C)) {
+        if (crouch>0) {
             if (!isCrouching) {
                 isCrouching = true;
                 // GetComponent<Animator>().SetBool("isCrouching", true);
